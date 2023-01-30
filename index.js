@@ -13,7 +13,7 @@ const jwt = require("jsonwebtoken")
 
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = `mongodb+srv://${process.env.POWER_HACK_SERVER}:${process.env.POWER_HACK_KEY}@cluster0.mlxcjcs.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.Site_Name}:${process.env.Site_Key}@cluster0.mlxcjcs.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 
@@ -50,7 +50,7 @@ function verifyJwt(req, res, next) {
 app.post("/jwt", async (req, res) => {
     const email = req.query.email;
     const query = { email: email };
-    const UserToken = await users.findOne(query);
+    const UserToken = await AllUser.findOne(query);
     if (UserToken){
       const token = jwt.sign({email}, process.env.AccessToken, { expiresIn: "1h" });
       return res.send({AccessToken: token});
